@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: font1;
+  src: url(./asscent/fonts/Oswald-VariableFont_wght.ttf);
+}
+
+* {
+  box-sizing: border-box;
+}
+ 
+@theme{
+  --font-1:font1,srife
+}
+
+
+html, body {
+  height: 100%;
+  width: 100%;
+  background-color:#d1d5dc;
+  
+}
