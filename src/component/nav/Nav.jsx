@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import icon from '../../asscent/icon/add-to-cart.png'
 import icon2 from '../../asscent/icon/student.png'
 import icon3 from '../../asscent/icon/user.png'
+import logo from '../../asscent/icon/Untitled design.png'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout } from '../../redux/features/auth/authSlice'
 import { Link, useLocation } from 'react-router-dom'
@@ -32,7 +33,7 @@ const Nav = () => {
 
         {/* LOGO */}
         <Link to="/" className="flex items-center gap-2">
-          <img src="https://flowbite.com/docs/images/logo.svg" className="h-7" />
+          <img src={logo} className="h-7" />
           <span className="text-lg font-bold">Shopix</span>
         </Link>
 
