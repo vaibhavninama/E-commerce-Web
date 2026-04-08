@@ -35,12 +35,13 @@ const {cartList, totalItem,totalPrice} =useSelector((store)=>store.cart )
   
    function handelAddCart(item){
         
-       dispatch(addCart({...item, qunlity: count}))
+       dispatch(addCart({ ...item, quality: count }))
+
        setCount(1)
    }
     function hendalShop(item){  
       Navigate(`/checkout`)
-      dispatch(addBuy({...item , quntity:count}))
+      dispatch(addBuy({ ...item, quality: count }))
       
     }
   return (
