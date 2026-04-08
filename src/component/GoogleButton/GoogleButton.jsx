@@ -1,67 +1,52 @@
-import { useSelector,useDispatch } from "react-redux";
-import {signInWithPopup,  getAuth, GoogleAuthProvider } from "firebase/auth";
+import { useSelector, useDispatch } from "react-redux";
+import { signInWithPopup, getAuth, GoogleAuthProvider } from "firebase/auth";
 import { toast, Bounce } from 'react-toastify';
 import app from "../../../firebase";
 import { useNavigate } from "react-router-dom";
-import {loadingStart,loginFail,loginSuccess} from '../../redux/features/auth/authSlice'
-
+import { loadingStart, loginFail, loginSuccess } from '../../redux/features/auth/authSlice'
 
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 
-
 const GoogleButton = () => {
-   const {user,isLoggedIn,loading} =useSelector( (store)=>store.auth)
-
-   const dispatch =useDispatch()
-
+  const { user, isLoggedIn, loading } = useSelector((store) => store.auth)
+  const dispatch = useDispatch()
   const navigate = useNavigate();
-  const notify = () => toast.success(" login successful !", {
-    position: "top-right",
-    autoClose: 1200,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: "dark",
-    transition: Bounce,
-  });
+
+  const notify = () =>
+    toast.success(" login successful !", {
+      position: "top-right",
+      autoClose: 1200,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      transition: Bounce,
+    });
 
   const loginUp = async () => {
-   
-   dispatch(loadingStart())
-    
-    try {
-       
-      signInWithPopup(auth,googleProvider)
-      .then( async (resultitem)=>{
-         const result =  resultitem.user
+    dispatch(loadingStart())
 
-          dispatch(loginSuccess({
+    try {
+      const resultitem = await signInWithPopup(auth, googleProvider)
+      const result = resultitem.user
+
+      dispatch(
+        loginSuccess({
           email: result?.email,
           displayName: result?.displayName,
           photo: result?.photoURL,
           uid: result?.uid,
-        }
-      
-    )) 
-            navigate('/')
-            notify()
-      })   
+        })
+      )
 
-      
-     
-
-    
-      
-      
-
+      navigate('/')
+      notify()
     } catch (error) {
-  
-     dispatch(loginFail(error))
-   
-  
+      console.log(error)
+      dispatch(loginFail(error))
     }
   };
 
@@ -96,7 +81,6 @@ const GoogleButton = () => {
         </svg>
       </span>
       <span>Sign in with Google</span>
-     
     </button>
   );
 };

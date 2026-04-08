@@ -4,16 +4,16 @@ import {Provider} from 'react-redux'
 import './index.css'
 import App from './App.jsx'
 import Store from './redux/store.js'
-import { BrowserRouter } from 'react-router-dom'
+import { HashRouter } from 'react-router-dom'
 
 createRoot(document.getElementById('root')).render(
  
-    <BrowserRouter>
+    <HashRouter>
 
       <Provider store={Store} >
         <App />
       </Provider>
-    </BrowserRouter>
+    </HashRouter>
 
 
 
