@@ -4,6 +4,7 @@ import { getRandomProduct } from "../api/ProductApi"
 import HeroSk from "./loadingSk/HeroSk"
 import { addBuy } from "../redux/features/btnBuy/btnBuy"
 import { useDispatch } from "react-redux"
+import {convertToRupees} from "./RupeesConvter/Conveter"
 
 const Hero = () => {
   const [Loading, setLoading] = useState(true)
@@ -69,8 +70,8 @@ const Hero = () => {
 
                 <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3">
                   <div className="rounded-2xl bg-white/70 p-4 shadow-sm backdrop-blur">
-                    <h3 className="text-lg font-bold text-gray-900">
-                      ₹{(item.price - (item.price * item.discountPercentage / 100)).toFixed(2)}
+                    <h3 className="text-lg font-bold text-gray-900 flex gap-3">
+                      ₹{convertToRupees(item.price)}
                     </h3>
                     <p className="text-xs text-gray-500 sm:text-sm">Special Price</p>
                   </div>

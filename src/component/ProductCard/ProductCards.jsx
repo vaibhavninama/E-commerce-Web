@@ -1,3 +1,4 @@
+import {convertToRupees} from '../RupeesConvter/Conveter'
 import Rating from './Rating'
 import { Link } from 'react-router-dom'
 
@@ -46,7 +47,7 @@ const ProductCard = ({ item, loading = false }) => {
           
           <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
             <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-heading">
-              ₹{(item.price - (item.price * item.discountPercentage / 100)).toFixed(2)}
+              ₹{convertToRupees(item.price)}
             </span>
 
             <h5

@@ -1,10 +1,14 @@
 import { useDispatch } from "react-redux";
 import { deecresQuleity, inncerssQuleity } from "../../redux/features/cart/cartSlice";
+import { convertToRupees } from "../RupeesConvter/Conveter";
 
 const CartCard = ({ product }) => {
   const dispatch = useDispatch();
 
   if (!product) return null;
+
+  const convertedPrice = convertToRupees(product.price);
+  const subtotal = convertedPrice * (product.quality || 1);
 
   return (
     <div className="mt-4 w-full max-w-full overflow-hidden rounded-lg border border-gray-200 bg-gray-300 p-4 shadow-xs sm:mt-6 sm:max-w-sm sm:p-5 md:p-6">
@@ -29,8 +33,8 @@ const CartCard = ({ product }) => {
         </a>
 
         <div className="mt-4 flex flex-col gap-4 sm:mt-6 sm:flex-row sm:items-center sm:justify-between">
-          <span className="text-2xl font-extrabold text-heading sm:text-3xl">
-            ₹{Number(product?.price || 0).toFixed(2)}
+          <span className="text-2xl font-extrabold text-heading sm:text-3xl flex gap-2">
+            ₹{convertToRupees(product.price)}
           </span>
 
           <div className="flex w-max items-center gap-3 border border-gray-300 bg-white px-3 py-2 sm:gap-4 sm:px-4 sm:py-2.5">
@@ -55,6 +59,10 @@ const CartCard = ({ product }) => {
             </button>
           </div>
         </div>
+
+        <p className="mt-3 font-semibold text-sm text-green-700">
+          Subtotal: ₹{subtotal}
+        </p>
 
         <div className="mt-3 text-xs text-gray-700 sm:mt-4 sm:text-sm">
           {product?.warrantyInformation || ''}
