@@ -7,6 +7,7 @@ import {useDispatch ,useSelector} from 'react-redux'
 import { addBuy } from '../redux/features/btnBuy/btnBuy';
 import { useNavigate } from 'react-router-dom';
 import { addCart ,inncerssQuleity,deecresQuleity } from '../redux/features/cart/cartSlice';
+import {convertToRupees} from '../component/RupeesConvter/Conveter';
 
 const ProductDetails = () => {
 
@@ -86,12 +87,10 @@ const {cartList, totalItem,totalPrice} =useSelector((store)=>store.cart )
           <div className="flex items-center flex-wrap gap-2 mt-6">
             <p className="text-slate-500 text-base">
             </p>
-            <h4 className="text-blue-800 text-2xl sm:text-3xl font-semibold">
-             ₹{(item.price*2-(item.price*2*(item.discountPercentage/100))).toFixed(2)}
+            <h4 className="text-blue-800 text-2xl sm:text-3xl font-semibold flex gap-2">
+             ₹{convertToRupees(item.price)}
             </h4>
-            <div className="flex py-1 px-2 bg-blue-600 rounded font-semibold sm:ml-4">
-              <span className="text-white text-xs sm:text-sm">save {item.discountPercentage}</span>
-            </div>
+            
           </div>
           <div>
             <h4 className="text-sm sm:text-base mt-4 text-slate-500 font-semibold">

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { categoryAdd } from "../../redux/features/filters/filtersSlice";
 
-const CategoryCard = ({ item }) => {
+const CategoryCard = ({ item ,imgs}) => {
   const dispatch = useDispatch();
 
   async function hendalCategory(name) {
@@ -20,7 +20,7 @@ const CategoryCard = ({ item }) => {
       >
         <img
           className="h-full w-full object-co"
-          src={`/imgs/${item.slug}.jpg`}
+          src={imgs}
           alt={item.name}
           onError={(e) => {
             e.target.src = "/imgs/default.jpg";

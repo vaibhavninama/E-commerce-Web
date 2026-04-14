@@ -3,9 +3,19 @@ import { getCategory } from "../../api/ProductApi"
 import CategoryCard from "./categoryCard"
 import CategorySkeleton from "../loadingSk/CategoryCardSkeleton"
 
+import beauty from '../../../public/imgs/beauty.jpg'
+import fragrances from '../../../public/imgs/fragrances.jpg'
+import furniture from '../../../public/imgs/furniture.jpg'
+import groceries from '../../../public/imgs/groceries.jpg'
+
+
 const CardsCategory = () => {
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState([])
+
+
+  const imgs =[beauty,fragrances,furniture,groceries]
+
 
   useEffect(() => {
     async function Category() {
@@ -32,6 +42,7 @@ const CardsCategory = () => {
                 <CategoryCard
                   key={typeof item === "string" ? item : item.slug || index}
                   item={item}
+                  imgs ={imgs[index]}
                 />
               ))}
         </div>

@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { convertToRupees } from '../../../component/RupeesConvter/Conveter'
 
 const initialState = {
   cartList: [],
@@ -11,28 +12,23 @@ const updateCartTotals = (state) => {
     return total + (Number(item.quality) || 0)
   }, 0)
 
-  state.totalPrice = Number(
-    state.cartList.reduce((total, item) => {
-      const finalPrice =
-       2 * Number(item.price) - (Number(item.price) * Number(item.discountPercentage) / 100)
-
-      return total + finalPrice * (Number(item.quality) || 0)
-    }, 0).toFixed(2)
-  )
+  state.totalPrice = state.cartList.reduce((total, item) => {
+    const price = convertToRupees(item.price)
+    const quantity = Number(item.quality) || 1
+    return total + price * quantity
+  }, 0)
 }
 
 const cartSlice = createSlice({
-  name: 'cartSlice',
+  name: 'cart',
   initialState,
-
   reducers: {
     addCart: (state, action) => {
       const product = action.payload
-
       const existProduct = state.cartList.find((item) => item.id === product.id)
 
       if (existProduct) {
-        existProduct.quality += Number(product.quality) || 0
+        existProduct.quality += Number(product.quality) || 1
       } else {
         state.cartList.push({
           ...product,
@@ -43,16 +39,22 @@ const cartSlice = createSlice({
       updateCartTotals(state)
     },
 
+    removeCart: (state, action) => {
+      const id = action.payload
+      state.cartList = state.cartList.filter((item) => item.id !== id)
+      updateCartTotals(state)
+    },
+
     deecresQuleity: (state, action) => {
       const id = action.payload
       const item = state.cartList.find((item) => item.id === id)
 
-      if (item) {
-        if (item.quality > 1) {
-          item.quality -= 1
-        } else {
-          state.cartList = state.cartList.filter((item) => item.id !== id)
-        }
+      if (!item) return
+
+      if (item.quality > 1) {
+        item.quality -= 1
+      } else {
+        state.cartList = state.cartList.filter((item) => item.id !== id)
       }
 
       updateCartTotals(state)
@@ -62,27 +64,35 @@ const cartSlice = createSlice({
       const id = action.payload
       const item = state.cartList.find((item) => item.id === id)
 
-      if (item) {
-        item.quality += 1
-      }
+      if (!item) return
 
-      updateCartTotals(state)
-    },
-
-    removeCart: (state, action) => {
-      const id = action.payload
-      state.cartList = state.cartList.filter((item) => item.id !== id)
-
+      item.quality += 1
       updateCartTotals(state)
     },
 
     setCart: (state, action) => {
-      state.cartList = action.payload.cartList || []
-      state.totalItem = action.payload.totalItem || 0
-      state.totalPrice = action.payload.totalPrice || 0
+      state.cartList = Array.isArray(action.payload?.cartList)
+        ? action.payload.cartList
+        : []
+
+      updateCartTotals(state)
+    },
+
+    clearCart: (state) => {
+      state.cartList = []
+      state.totalItem = 0
+      state.totalPrice = 0
     }
   }
 })
 
-export const { addCart, removeCart, deecresQuleity, inncerssQuleity, setCart } = cartSlice.actions
+export const {
+  addCart,
+  removeCart,
+  deecresQuleity,
+  inncerssQuleity,
+  setCart,
+  clearCart
+} = cartSlice.actions
+
 export default cartSlice.reducer

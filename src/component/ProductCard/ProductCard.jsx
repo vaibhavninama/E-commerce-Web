@@ -3,6 +3,7 @@ import { getAllProduct } from '../../api/ProductApi'
 import Rating from './Rating'
 import { Link } from 'react-router-dom'
 import Skeleton from '../loadingSk/ProductCardSkeleton'
+import {convertToRupees} from '../RupeesConvter/Conveter'
 import ProductDetails from '../../pages/ProductDetails'
 
 const ProductCard = () => {
@@ -62,7 +63,7 @@ const ProductCard = () => {
 
               <div className="flex flex-col gap-3 sm:gap-4 mt-4 sm:mt-6">
                 <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-heading">
-                  ₹{item.price * 2}
+                  ₹{convertToRupees(item.price)}
                 </span>
 
                 <h5
